@@ -8,7 +8,6 @@ class PaginationConnectionField(graphene.relay.ConnectionField):
 
     @classmethod
     def resolve_connection(cls, connection_type, args, resolved):
-        connection_type = connection_type
         edge_type = connection_type.Edge
         page_info_type = graphene.PageInfo
         attr_order_by = args.get('order_by') or ()
@@ -29,6 +28,9 @@ class PaginationConnectionField(graphene.relay.ConnectionField):
                 has_prev = True
             else:
                 has_next = True
+
+        if reverse:
+            resolved = list(reversed(resolved))
 
         edges = [
             edge_type(

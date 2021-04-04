@@ -164,3 +164,157 @@ def test_relationship_paginate_child_order_by(schema: Schema):
             },
         ]
     }
+
+
+def test_relationship_paginate_states_first_1(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(first: 1, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 2, 'name': 'New South Wales'}
+                },
+            ]
+        }
+    }
+
+
+def test_relationship_paginate_states_first_2(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(first: 2, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 2, 'name': 'New South Wales'}
+                },
+                {
+                    'node': {'internalId': 3, 'name': 'New York'}
+                },
+            ]
+        }
+    }
+
+def test_relationship_paginate_states_first_3(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(first: 3, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 2, 'name': 'New South Wales'}
+                },
+                {
+                    'node': {'internalId': 3, 'name': 'New York'}
+                },
+                {
+                    'node': {'internalId': 1, 'name': 'Victoria'}
+                },
+            ]
+        }
+    }
+
+
+def test_relationship_paginate_states_last_1(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(last: 1, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 1, 'name': 'Victoria'}
+                },
+            ]
+        }
+    }
+
+
+def test_relationship_paginate_states_last_2(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(last: 2, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 3, 'name': 'New York'}
+                },
+                {
+                    'node': {'internalId': 1, 'name': 'Victoria'}
+                },
+            ]
+        }
+    }
+
+def test_relationship_paginate_states_last_3(schema: Schema):
+    result = schema.execute(''' {
+        states: paginateStates(last: 3, orderBy: [NAME_ASC]) {
+            edges {
+                node {
+                    internalId
+                    name
+                }
+            }
+        }
+    }''')
+    assert not result.errors
+    assert result.data == {
+        'states': {
+            'edges': [
+                {
+                    'node': {'internalId': 2, 'name': 'New South Wales'}
+                },
+                {
+                    'node': {'internalId': 3, 'name': 'New York'}
+                },
+                {
+                    'node': {'internalId': 1, 'name': 'Victoria'}
+                },
+            ]
+        }
+    }

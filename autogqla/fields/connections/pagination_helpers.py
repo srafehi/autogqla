@@ -79,8 +79,4 @@ def paginate(model, query: Query, pagination: PaginationDetails):
     limit_amount = (pagination.last if reverse else pagination.first) or 10
     query = query.order_by(*order_by_statements).limit(limit_amount + 1)
 
-    results = query.all()
-    if reverse:
-        results = list(reversed(results))
-
-    return results
+    return query.all()
